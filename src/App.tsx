@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { months, getYearsRange } from "./helpers/calendar"
+import { months, getYearsRange, getDaysOfMonth } from "./helpers/calendar"
 import { CalendarViewTypes } from "./types"
 import MonthView from "./components/MonthView"
 import WeekView from "./components/WeekView"
@@ -8,12 +8,22 @@ import DayView from "./components/DayView"
 function App() {
   const [year, setYear] = useState(2024)
   const [month, setMonth] = useState(2)
+  const [day, setDay] = useState(1)
   const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.DAY)
 
   return (
     <div className="w-full h-screen p-5">
       <div className="w-full flex justify-between items-center mb-3">
         <div className="flex gap-3">
+          <select
+            value={day}
+            className="select select-xs select-bordered w-14"
+            onChange={e => setDay(parseInt(e.target.value))}
+          >
+            {getDaysOfMonth(year, month).map(e => (
+              <option value={e}>{e}</option>
+            ))}
+          </select>
           <select
             value={month}
             className="select select-xs select-bordered w-28"
@@ -54,8 +64,8 @@ function App() {
           </button>
         </div>
       </div>
-      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={5} />}
-      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={26} />}
+      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={day} />}
+      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={day} />}
       {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} />}
     </div>
   )

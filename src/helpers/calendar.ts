@@ -187,9 +187,9 @@ export const getWeeksByYearAndMonth = (year: number, month: number) => {
     return weeks;
 };
 
-export const getWeekByYearMonthAndDate = (year: number, month: number, date: number) => {
+export const getWeekByYearMonthAndDate = (year: number, month: number, day: number) => {
     // Create a date object for the given date
-    const inputDate = new Date(year, month - 1, date);
+    const inputDate = new Date(year, month - 1, day);
     
     // Find the day of the week for the given date (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const dayOfWeek = inputDate.getDay();
@@ -214,4 +214,31 @@ export const getWeekByYearMonthAndDate = (year: number, month: number, date: num
     }
     
     return weekDates;
+}
+
+export const getWeekday = (year: number, month: number, day: number) => {
+    // Create a new Date object
+    const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
+
+    // Array of weekday names
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+    // Get the day of the week (0-6) from the Date object
+    const dayOfWeek = date.getDay();
+
+    // Return the corresponding weekday name
+    return weekdays[dayOfWeek];
+}
+
+export const getDaysOfMonth = (year: number, month: number) => {
+    // Get the number of days in the given month
+    const daysInMonth = new Date(year, month, 0).getDate();
+    
+    // Create an array with all the days of the month
+    const daysArray = [];
+    for (let day = 1; day <= daysInMonth; day++) {
+        daysArray.push(day);
+    }
+    
+    return daysArray;
 }
