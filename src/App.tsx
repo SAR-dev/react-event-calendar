@@ -66,7 +66,7 @@ function App() {
       </div>
       {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={day} />}
       {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={day} />}
-      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} />}
+      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} day={day} />}
     </div>
   )
 }
