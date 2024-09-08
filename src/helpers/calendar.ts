@@ -39,6 +39,13 @@ export const getMonths = () => {
     return months;
 }
 
+const getWeekOfMonth = (date: Date) => {
+    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const dayOfWeek = startOfMonth.getDay(); // Get day of the week for the first of the month (0 = Sunday)
+    const offset = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Offset the week to start on Monday
+    return Math.ceil((date.getDate() + offset) / 7);
+}
+
 export const getDaysByYearAndMonth = (year: number, month: number) => {
     const days = [];
     const date = new Date(year, month - 1); // months are 0-indexed in JS (0 for January)
@@ -46,9 +53,11 @@ export const getDaysByYearAndMonth = (year: number, month: number) => {
     // Loop through all days of the month
     while (date.getMonth() === month - 1) {
         const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+        const weekNo = getWeekOfMonth(date); // Get week number starting from Monday
         days.push({
             day: date.getDate(),
-            dayName: dayName
+            dayName: dayName,
+            weekNo: weekNo
         });
         date.setDate(date.getDate() + 1); // Move to the next day
     }

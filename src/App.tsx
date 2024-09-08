@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { getMonths, getWeekdays } from "./constants/calendar"
+import { useMemo, useState } from "react"
+import { getDaysByYearAndMonth, getMonths, getWeekdays } from "./helpers/calendar"
 import { CalendarViewTypes } from "./types"
 
 function App() {
@@ -9,6 +9,11 @@ function App() {
   const [year, setYear] = useState(2024)
   const [month, setMonth] = useState(0)
   const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.MONTH)
+
+  const daysByYearAndMonth = useMemo(
+    () => getDaysByYearAndMonth(year, month),
+    [year, month]
+  );
 
   return (
     <div className="w-full h-screen p-5">
