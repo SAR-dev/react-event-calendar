@@ -101,6 +101,34 @@ export const months = [
 
 export const weeks = [1, 2, 3, 4, 5]
 
+export const timeRanges = [
+    { start: "00:00", end: "01:00" },
+    { start: "01:00", end: "02:00" },
+    { start: "02:00", end: "03:00" },
+    { start: "03:00", end: "04:00" },
+    { start: "04:00", end: "05:00" },
+    { start: "05:00", end: "06:00" },
+    { start: "06:00", end: "07:00" },
+    { start: "07:00", end: "08:00" },
+    { start: "08:00", end: "09:00" },
+    { start: "09:00", end: "10:00" },
+    { start: "10:00", end: "11:00" },
+    { start: "11:00", end: "12:00" },
+    { start: "12:00", end: "13:00" },
+    { start: "13:00", end: "14:00" },
+    { start: "14:00", end: "15:00" },
+    { start: "15:00", end: "16:00" },
+    { start: "16:00", end: "17:00" },
+    { start: "17:00", end: "18:00" },
+    { start: "18:00", end: "19:00" },
+    { start: "19:00", end: "20:00" },
+    { start: "20:00", end: "21:00" },
+    { start: "21:00", end: "22:00" },
+    { start: "22:00", end: "23:00" },
+    { start: "23:00", end: "00:00" } 
+];
+
+
 export const getYearsRange = () => {
     const currentYear = new Date().getFullYear();
     const startYear = currentYear - 5;
@@ -151,3 +179,32 @@ export const getWeeksByYearAndMonth = (year: number, month: number) => {
 
     return weeks;
 };
+
+export const getWeekByYearMonthAndDate = (year: number, month: number, date: number) => {
+    // Create a date object for the given date
+    const inputDate = new Date(year, month - 1, date);
+    
+    // Find the day of the week for the given date (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    const dayOfWeek = inputDate.getDay();
+    
+    // Calculate how many days to subtract to get to the Monday of that week
+    const daysToMonday = (dayOfWeek + 6) % 7; // This will give us the offset from Sunday to Monday
+    
+    // Create a new date object for the Monday of that week
+    const mondayDate = new Date(inputDate);
+    mondayDate.setDate(inputDate.getDate() - daysToMonday);
+    
+    // Generate the week dates starting from Monday
+    const weekDates = [];
+    for (let i = 0; i < 7; i++) {
+        const weekDay = new Date(mondayDate);
+        weekDay.setDate(mondayDate.getDate() + i);
+        weekDates.push({
+            day: weekDay.getDate(),
+            month: weekDay.toLocaleString('default', { month: 'short' }),
+            year: weekDay.getFullYear()
+        });
+    }
+    
+    return weekDates;
+}

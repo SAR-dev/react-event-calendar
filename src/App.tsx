@@ -2,11 +2,13 @@ import { useState } from "react"
 import { months, getYearsRange } from "./helpers/calendar"
 import { CalendarViewTypes } from "./types"
 import MonthView from "./components/MonthView"
+import WeekView from "./components/WeekView"
+import DayView from "./components/DayView"
 
 function App() {
   const [year, setYear] = useState(2024)
   const [month, setMonth] = useState(2)
-  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.MONTH)
+  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.WEEK)
 
   return (
     <div className="w-full h-screen p-5">
@@ -32,15 +34,28 @@ function App() {
           </select>
         </div>
         <div className="join join-horizontal">
-          <button className="btn btn-sm join-item">Day</button>
-          <button className="btn btn-sm join-item">Week</button>
+          <button
+            className={`btn btn-sm join-item ${view === CalendarViewTypes.DAY ? "btn-active" : ""}`}
+            onClick={() => setView(CalendarViewTypes.DAY)}
+          >
+            Day
+          </button>
+          <button
+            className={`btn btn-sm join-item ${view === CalendarViewTypes.WEEK ? "btn-active" : ""}`}
+            onClick={() => setView(CalendarViewTypes.WEEK)}
+          >
+            Week
+          </button>
           <button
             className={`btn btn-sm join-item ${view === CalendarViewTypes.MONTH ? "btn-active" : ""}`}
             onClick={() => setView(CalendarViewTypes.MONTH)}
           >
-            Month</button>
+            Month
+          </button>
         </div>
       </div>
+      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={5} />}
+      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={26} />}
       {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} />}
     </div>
   )

@@ -8,8 +8,8 @@ const MonthView = ({year, month}:{year: number, month: number}) => {
     );
 
     return (
-        <div className="flex flex-col">
-            <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium">
+        <div className="flex flex-col relative">
+            <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium sticky top-0">
                 {weekdays.map((weekday, i) => (
                     <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300" key={i}>
                         {weekday.longName}
