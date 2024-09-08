@@ -8,7 +8,7 @@ import DayView from "./components/DayView"
 function App() {
   const [year, setYear] = useState(2024)
   const [month, setMonth] = useState(2)
-  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.WEEK)
+  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.DAY)
 
   return (
     <div className="w-full h-screen p-5">

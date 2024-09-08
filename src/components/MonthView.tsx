@@ -7,6 +7,8 @@ const MonthView = ({year, month}:{year: number, month: number}) => {
         [year, month]
     );
 
+    console.log(weeksByYearAndMonth)
+
     return (
         <div className="flex flex-col relative">
             <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium sticky top-0">
