@@ -146,17 +146,20 @@ export const getYearsRange = () => {
 
 
 const getWeekOfMonth = (date: Date) => {
-    const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    // Get the first day of the month
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
 
-    // Find the day of the first Monday of the month
-    const dayOfWeek = startOfMonth.getDay();
-    const firstMonday = dayOfWeek === 0 ? 2 : (dayOfWeek === 1 ? 1 : 9 - dayOfWeek);
+    // Get the day of the week (Monday as the start)
+    const dayOfWeek = (firstDayOfMonth.getDay() + 6) % 7; // Adjust so Monday is day 0
 
-    // Adjust the day of the date relative to the first Monday
-    const adjustedDay = date.getDate() - firstMonday;
+    // Calculate the offset based on the start of the week
+    const offset = dayOfWeek; // Days before the first Monday of the month
+
+    // Get the current day of the month
+    const dayOfMonth = date.getDate();
 
     // Calculate the week number
-    return Math.ceil((adjustedDay + 1) / 7) + 1;
+    return Math.ceil((dayOfMonth + offset) / 7);
 }
 
 export const getDayOfWeekIndex = (date: Date): number => {
