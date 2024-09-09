@@ -1,4 +1,4 @@
-import { TimeRangeType } from "../types/types";
+import { CalendarDataType, TimeRangeEventsType, TimeRangeType } from "../types/types";
 
 export const weekdays = [
     {
@@ -159,7 +159,7 @@ const getWeekOfMonth = (date: Date) => {
     return Math.ceil((adjustedDay + 1) / 7) + 1;
 }
 
-const getDayOfWeekIndex = (date: Date): number => {
+export const getDayOfWeekIndex = (date: Date): number => {
     // getDay() returns 0 for Sunday, 1 for Monday, ..., 6 for Saturday
     const day = date.getDay();
     // Adjust so Monday is 1 and Sunday is 7
@@ -189,7 +189,15 @@ export const getWeeksByYearAndMonth = (year: number, month: number) => {
     return weeks;
 };
 
-export const getWeekByYearMonthAndDate = (year: number, month: number, date: number) => {
+export const getWeekByYearMonthAndDate = ({
+    year, 
+    month, 
+    date
+}:{
+    year: number, 
+    month: number, 
+    date: number
+}) => {
     // Create a date object for the given date
     const inputDate = new Date(year, month - 1, date);
 
@@ -239,15 +247,83 @@ export const getDaysOfMonth = (year: number, month: number) => {
     return daysArray;
 }
 
-export const isMatchingDate = ({ date, year, month, day }: { date: Date, year: number, month: number, day: number }): boolean => {
+export const isMatchingDate = ({ 
+    dateObject, 
+    year, 
+    month, 
+    date 
+}: { 
+    dateObject: Date, 
+    year: number, 
+    month: number, 
+    date: number 
+}): boolean => {
     return (
-        date.getFullYear() === year &&
-        (date.getMonth() + 1) === month &&
-        date.getDate() === day
+        dateObject.getFullYear() === year &&
+        (dateObject.getMonth() + 1) === month &&
+        dateObject.getDate() === date
     );
 };
+
 
 export function formatTimestampToTime(timestamp: string) {
     const date = new Date(timestamp);
     return `${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
+}
+
+export const filterDayViewData = ({ 
+    year, 
+    month, 
+    date, 
+    data 
+}: { 
+    year: number, 
+    month: number, 
+    date: number, 
+    data: CalendarDataType[] 
+}): TimeRangeEventsType[] => {
+    return timeRanges.map(timeRange => {
+        return {
+            ...timeRange,
+            events: data.filter(event =>
+                isMatchingDate({
+                    dateObject: new Date(event.start_at),
+                    year, 
+                    month, 
+                    date
+                }) &&
+                formatTimestampToTime(event.start_at) >= timeRange.start &&
+                formatTimestampToTime(event.start_at) < timeRange.end
+            ),
+        };
+    });
+}
+
+export const filterWeekViewData = ({ 
+    year, 
+    month, 
+    date, 
+    data 
+}: { 
+    year: number, 
+    month: number, 
+    date: number, 
+    data: CalendarDataType[] 
+}): TimeRangeEventsType[] => {
+    const weekdates = getWeekByYearMonthAndDate({year, month, date})
+    return timeRanges.map(timeRange => {
+        return {
+            ...timeRange,
+            events: data.filter(event =>
+                weekdates.some(weekDate => isMatchingDate({
+                    dateObject: new Date(event.start_at),
+                    year, 
+                    month, 
+                    date: weekDate.day
+                })) &&
+                formatTimestampToTime(event.start_at) >= timeRange.start &&
+                formatTimestampToTime(event.start_at) < timeRange.end
+            ),
+        };
+    });
 }

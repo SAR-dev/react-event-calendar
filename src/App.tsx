@@ -13,13 +13,13 @@ const data: CalendarDataType[] = [
   },
   {
     title: "Project Designing",
-    start_at: "2024-09-09T10:00:00+09:00",
-    end_at: "2024-09-09T12:00:00+09:00"
+    start_at: "2024-09-10T10:00:00+09:00",
+    end_at: "2024-09-10T12:00:00+09:00"
   },
   {
     title: "Project Deadline",
-    start_at: "2024-09-09T15:00:00+09:00",
-    end_at: "2024-09-09T16:00:00+09:00"
+    start_at: "2024-09-11T15:00:00+09:00",
+    end_at: "2024-09-11T16:00:00+09:00"
   },
   {
     title: "Client Presentation",
@@ -28,8 +28,8 @@ const data: CalendarDataType[] = [
   },
   {
     title: "Workshop",
-    start_at: "2024-09-09T14:00:00+09:00",
-    end_at: "2024-09-09T17:00:00+09:00"
+    start_at: "2024-09-11T14:00:00+09:00",
+    end_at: "2024-09-11T17:00:00+09:00"
   },
   {
     title: "Monthly Review",
@@ -42,7 +42,7 @@ const App = () => {
   const [year, setYear] = useState(new Date().getFullYear())
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [date, setDate] = useState(new Date().getDate())
-  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.DAY)
+  const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.WEEK)
 
   return (
     <div className="w-full h-screen p-5">

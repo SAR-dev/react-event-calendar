@@ -1,37 +1,26 @@
 import { useMemo } from "react"
-import { weekdays, timeRanges, getWeekByYearMonthAndDate, isMatchingDate, formatTimestampToTime } from "../helpers/calendar"
+import { weekdays, filterWeekViewData, getWeekByYearMonthAndDate, getDayOfWeekIndex, formatTimestampToTime } from "../helpers/calendar"
 import { CalendarDataType, TimeRangeEventsType } from "../types/types";
+import { stringToColor } from "../helpers/color";
 
-function filterData(year: number, month: number, day: number, data: CalendarDataType[]): TimeRangeEventsType[] {
-    return timeRanges.map(timeRange => {
-        return {
-            ...timeRange,
-            events: data.filter(event =>
-                isMatchingDate({
-                    date: new Date(event.start_at),
-                    year, month, day
-                }) &&
-                formatTimestampToTime(event.start_at) >= timeRange.start &&
-                formatTimestampToTime(event.start_at) < timeRange.end
-            ),
-        };
-    });
-}
-
-
-const WeekView = ({ 
-    year, 
-    month, 
+const WeekView = ({
+    year,
+    month,
     date,
     data
-}: { 
-    year: number, 
-    month: number, 
+}: {
+    year: number,
+    month: number,
     date: number,
     data: CalendarDataType[]
 }) => {
-    const weekByYearMonthAndDate = useMemo(
-        () => getWeekByYearMonthAndDate(year, month, date),
+    const timeRangeEvents: TimeRangeEventsType[] = useMemo(
+        () => filterWeekViewData({ year, month, date, data }),
+        [year, month, date, data]
+    );
+
+    const weekDates = useMemo(
+        () => getWeekByYearMonthAndDate({ year, month, date }),
         [year, month, date]
     );
 
@@ -47,20 +36,25 @@ const WeekView = ({
             </div>
             <div className="w-full grid grid-cols-8 border border-base-300 text-sm font-medium">
                 <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300"></div>
-                {weekByYearMonthAndDate.map((day, i) => (
+                {weekDates.map((day, i) => (
                     <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300 text-xs font-light" key={i}>
                         {day.day} {day.month}
                     </div>
                 ))}
             </div>
-            {timeRanges.map((timeRange, i) => (
+            {timeRangeEvents.map((timeRangeEvent, i) => (
                 <div className="w-full grid grid-cols-8 border border-base-300 text-sm font-medium" key={i}>
                     <div className="h-auto py-2 flex justify-center items-center w-full bg-base-100 border-r border-base-300">
-                        {timeRange.start}
+                        {timeRangeEvent.start}
                     </div>
                     {weekdays.map((day, i) => (
-                        <div className="h-auto min-h-14 flex justify-center items-center w-full bg-base-100 border-r border-base-300" key={i}>
-                            {day.index}
+                        <div className="h-auto min-h-14 flex items-center w-full bg-base-100 border-r border-base-300 p-2" key={i}>
+                            {timeRangeEvent.events.filter(e => getDayOfWeekIndex(new Date(e.start_at)) == day.index).map(ev => (
+                                <div className="flex gap-2 items-center text-xs" key={i}>
+                                    <div className="h-3 w-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${stringToColor(ev.title)}` }}></div>
+                                    <div>{formatTimestampToTime(ev.start_at)} - {formatTimestampToTime(ev.end_at)}</div>
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>

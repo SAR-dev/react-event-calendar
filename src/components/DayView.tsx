@@ -1,23 +1,7 @@
 import { useMemo } from "react";
-import { timeRanges, months, getWeekday, isMatchingDate, formatTimestampToTime } from "../helpers/calendar"
+import { months, getWeekday, formatTimestampToTime, filterDayViewData } from "../helpers/calendar"
 import { CalendarDataType, TimeRangeEventsType } from "../types/types"
 import { stringToColor } from "../helpers/color";
-
-function filterData(year: number, month: number, day: number, data: CalendarDataType[]): TimeRangeEventsType[] {
-    return timeRanges.map(timeRange => {
-        return {
-            ...timeRange,
-            events: data.filter(event =>
-                isMatchingDate({
-                    date: new Date(event.start_at),
-                    year, month, day
-                }) &&
-                formatTimestampToTime(event.start_at) >= timeRange.start &&
-                formatTimestampToTime(event.start_at) < timeRange.end
-            ),
-        };
-    });
-}
 
 const DayView = ({
     year,
@@ -31,7 +15,7 @@ const DayView = ({
     data: CalendarDataType[]
 }) => {
     const timeRangeEvents: TimeRangeEventsType[] = useMemo(
-        () => filterData(year, month, date, data),
+        () => filterDayViewData({year, month, date, data}),
         [year, month, date, data]
     );
 
@@ -54,7 +38,7 @@ const DayView = ({
                     <div className="w-auto h-auto flex flex-col justify-center gap-1 w-full bg-base-100 p-2">
                         {timeRangeEvent.events.map((e, i) => (
                             <div className="flex gap-2 items-center text-xs" key={i}>
-                                <div className="h-3 w-3 rounded-full" style={{backgroundColor: `${stringToColor(e.title)}`}}></div>
+                                <div className="h-3 w-3 rounded-full flex-shrink-0" style={{backgroundColor: `${stringToColor(e.title)}`}}></div>
                                 <div>{formatTimestampToTime(e.start_at)} - {formatTimestampToTime(e.end_at)} {e.title}</div>
                             </div>
                         ))}
