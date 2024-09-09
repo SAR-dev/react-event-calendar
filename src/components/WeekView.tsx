@@ -5,17 +5,17 @@ import { CalendarDataType } from "../types/types";
 const WeekView = ({ 
     year, 
     month, 
-    day,
+    date,
     data
 }: { 
     year: number, 
     month: number, 
-    day: number,
+    date: number,
     data: CalendarDataType[]
 }) => {
     const weekByYearMonthAndDate = useMemo(
-        () => getWeekByYearMonthAndDate(year, month, day),
-        [year, month, day]
+        () => getWeekByYearMonthAndDate(year, month, date),
+        [year, month, date]
     );
 
     return (

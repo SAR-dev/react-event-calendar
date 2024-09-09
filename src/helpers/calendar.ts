@@ -1,3 +1,5 @@
+import { TimeRangeType } from "../types/types";
+
 export const weekdays = [
     {
         longName: "Monday",
@@ -101,7 +103,7 @@ export const months = [
 
 export const weeks = [1, 2, 3, 4, 5]
 
-export const timeRanges = [
+export const timeRanges: TimeRangeType[] = [
     { start: "00:00", end: "01:00" },
     { start: "01:00", end: "02:00" },
     { start: "02:00", end: "03:00" },

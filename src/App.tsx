@@ -8,8 +8,8 @@ import DayView from "./components/DayView"
 const data: CalendarDataType[] = [
   {
     title: "Team Meeting",
-    start_at: "2024-09-05T10:00:00+09:00",
-    end_at: "2024-09-05T11:30:00+09:00"
+    start_at: "2024-09-09T10:00:00+09:00",
+    end_at: "2024-09-09T11:30:00+09:00"
   },
   {
     title: "Project Deadline",
@@ -33,11 +33,10 @@ const data: CalendarDataType[] = [
   }
 ]
 
-
 const App = () => {
   const [year, setYear] = useState(new Date().getFullYear())
   const [month, setMonth] = useState(new Date().getMonth() + 1)
-  const [day, setDay] = useState(new Date().getDate())
+  const [date, setDate] = useState(new Date().getDate())
   const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.DAY)
 
   return (
@@ -45,9 +44,9 @@ const App = () => {
       <div className="w-full flex justify-between items-center mb-3">
         <div className="flex gap-3">
           <select
-            value={day}
+            value={date}
             className="select select-xs select-bordered w-14"
-            onChange={e => setDay(parseInt(e.target.value))}
+            onChange={e => setDate(parseInt(e.target.value))}
           >
             {getDaysOfMonth(year, month).map(e => (
               <option value={e}>{e}</option>
@@ -93,9 +92,9 @@ const App = () => {
           </button>
         </div>
       </div>
-      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={day} data={data} />}
-      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={day} data={data} />}
-      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} day={day} data={data} />}
+      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} date={date} data={data} />}
+      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} date={date} data={data} />}
+      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} date={date} data={data} />}
     </div>
   )
 }

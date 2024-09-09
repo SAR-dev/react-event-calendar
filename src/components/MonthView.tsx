@@ -5,12 +5,12 @@ import { CalendarDataType } from "../types/types";
 const MonthView = ({
     year, 
     month, 
-    day,
+    date,
     data
 }:{
     year: number, 
     month: number, 
-    day: number,
+    date: number,
     data: CalendarDataType[]
 }) => {
     const weeksByYearAndMonth = useMemo(
@@ -30,7 +30,7 @@ const MonthView = ({
             {weeks.map((weekNo) => (
                 <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium" key={weekNo}>
                     {weekdays.map((weekday, i) => (
-                        <div className={`h-20 flex justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == day ? "bg-info text-info-content" : ""}`} key={i}>
+                        <div className={`h-20 flex justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == date ? "bg-info text-info-content" : ""}`} key={i}>
                             {weeksByYearAndMonth[weekNo][weekday.index]}
                         </div>
                     ))}
