@@ -187,9 +187,9 @@ export const getWeeksByYearAndMonth = (year: number, month: number) => {
     return weeks;
 };
 
-export const getWeekByYearMonthAndDate = (year: number, month: number, day: number) => {
+export const getWeekByYearMonthAndDate = (year: number, month: number, date: number) => {
     // Create a date object for the given date
-    const inputDate = new Date(year, month - 1, day);
+    const inputDate = new Date(year, month - 1, date);
     
     // Find the day of the week for the given date (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const dayOfWeek = inputDate.getDay();
@@ -216,18 +216,12 @@ export const getWeekByYearMonthAndDate = (year: number, month: number, day: numb
     return weekDates;
 }
 
-export const getWeekday = (year: number, month: number, day: number) => {
+export const getWeekday = (year: number, month: number, date: number) => {
     // Create a new Date object
-    const date = new Date(year, month - 1, day); // month is 0-indexed in JS Date
-
-    // Array of weekday names
-    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-    // Get the day of the week (0-6) from the Date object
-    const dayOfWeek = date.getDay();
+    const dateObject = new Date(year, month - 1, date); // month is 0-indexed in JS Date
 
     // Return the corresponding weekday name
-    return weekdays[dayOfWeek];
+    return dateObject.toLocaleDateString('en-us', { weekday: 'long' });
 }
 
 export const getDaysOfMonth = (year: number, month: number) => {
