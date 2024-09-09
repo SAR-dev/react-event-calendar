@@ -1,15 +1,15 @@
 import { useMemo } from "react"
-import { getWeeksByYearAndMonth, weeks, weekdays } from "../helpers/calendar"
+import { getWeeksByYearAndMonth, weeks, weekdays, isMatchingDate } from "../helpers/calendar"
 import { CalendarDataType } from "../types/types";
 
 const MonthView = ({
-    year, 
-    month, 
+    year,
+    month,
     date,
     data
-}:{
-    year: number, 
-    month: number, 
+}: {
+    year: number,
+    month: number,
     date: number,
     data: CalendarDataType[]
 }) => {
@@ -17,6 +17,18 @@ const MonthView = ({
         () => getWeeksByYearAndMonth(year, month),
         [year, month]
     );
+
+    const countEventsByYearMonthDate = (weekNo: number, weekDayIndex: number) => {
+        const d = weeksByYearAndMonth[weekNo][weekDayIndex]
+        if (!d) return;
+        const count = data.filter(e => isMatchingDate({
+            dateObject: new Date(e.start_at),
+            year,
+            month,
+            date: d
+        })).length
+        if (count > 0) return count;
+    }
 
     return (
         <div className="flex flex-col relative">
@@ -30,8 +42,13 @@ const MonthView = ({
             {weeks.map((weekNo) => (
                 <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium" key={weekNo}>
                     {weekdays.map((weekday, i) => (
-                        <div className={`h-20 flex justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == date ? "bg-info text-info-content" : ""}`} key={i}>
+                        <div className={`h-20 relative flex flex-col gap-1 justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == date ? "bg-info text-info-content" : ""}`} key={i}>
                             {weeksByYearAndMonth[weekNo][weekday.index]}
+                            <div className="w-full flex items-center justify-center">
+                                <div className="h-6 w-6 flex justify-center items-center bg-warning text-warning-content rounded-full mb-1">
+                                    {countEventsByYearMonthDate(weekNo, weekday.index)}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
