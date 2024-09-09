@@ -6,9 +6,9 @@ import WeekView from "./components/WeekView"
 import DayView from "./components/DayView"
 
 function App() {
-  const [year, setYear] = useState(2024)
-  const [month, setMonth] = useState(2)
-  const [day, setDay] = useState(1)
+  const [year, setYear] = useState(new Date().getFullYear())
+  const [month, setMonth] = useState(new Date().getMonth() + 1)
+  const [day, setDay] = useState(new Date().getDate())
   const [view, setView] = useState<CalendarViewTypes>(CalendarViewTypes.DAY)
 
   return (
