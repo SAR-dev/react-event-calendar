@@ -7,31 +7,37 @@ import DayView from "./components/DayView"
 
 const data: CalendarDataType[] = [
   {
+    id: 1,
     title: "Team Meeting",
     start_at: "2024-09-09T10:00:00+09:00",
     end_at: "2024-09-09T11:30:00+09:00"
   },
   {
+    id: 2,
     title: "Project Designing",
     start_at: "2024-09-10T10:00:00+09:00",
     end_at: "2024-09-10T12:00:00+09:00"
   },
   {
+    id: 3,
     title: "Project Deadline",
     start_at: "2024-09-11T15:00:00+09:00",
     end_at: "2024-09-11T16:00:00+09:00"
   },
   {
+    id: 4,
     title: "Client Presentation",
     start_at: "2024-09-09T09:30:00+09:00",
     end_at: "2024-09-09T10:30:00+09:00"
   },
   {
+    id: 5,
     title: "Workshop",
     start_at: "2024-09-11T14:00:00+09:00",
     end_at: "2024-09-11T17:00:00+09:00"
   },
   {
+    id: 6,
     title: "Monthly Review",
     start_at: "2024-09-25T11:00:00+09:00",
     end_at: "2024-09-25T12:00:00+09:00"
