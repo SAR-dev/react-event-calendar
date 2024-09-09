@@ -46,7 +46,7 @@ const MonthView = ({
                             {weeksByYearAndMonth[weekNo][weekday.index]}
                             <div className="w-full flex items-center justify-center">
                                 <div className="h-6 w-6 flex justify-center items-center bg-warning text-warning-content rounded-full mb-1">
-                                    {countEventsByYearMonthDate(weekNo, weekday.index)}
+                                    {countEventsByYearMonthDate(weekNo, weekday.index) ?? "-"}
                                 </div>
                             </div>
                         </div>
