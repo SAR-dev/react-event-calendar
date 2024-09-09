@@ -39,10 +39,10 @@ const WeekView = ({
             {timeRanges.map((timeRange, i) => (
                 <div className="w-full grid grid-cols-8 border border-base-300 text-sm font-medium" key={i}>
                     <div className="h-auto py-2 flex justify-center items-center w-full bg-base-100 border-r border-base-300">
-                        {timeRange.start} <br /> {timeRange.end}
+                        {timeRange.start}
                     </div>
                     {weekdays.map((day, i) => (
-                        <div className="h-auto flex justify-center items-center w-full bg-base-100 border-r border-base-300" key={i}>
+                        <div className="h-auto min-h-14 flex justify-center items-center w-full bg-base-100 border-r border-base-300" key={i}>
                             {day.index}
                         </div>
                     ))}
