@@ -55,7 +55,7 @@ const DayView = ({
     date: number,
     data: CalendarDataType[]
 }) => {
-    const events:TimeRangeEventsType[] = useMemo(
+    const timeRangeEvents: TimeRangeEventsType[] = useMemo(
         () => filterData(year, month, date, data),
         [year, month, date, data]
     );
@@ -71,10 +71,10 @@ const DayView = ({
                     </div>
                 </div>
             </div>
-            {timeRanges.map((timeRange, i) => (
+            {timeRangeEvents.map((timeRangeEvent, i) => (
                 <div className="w-full flex border-x border-base-300 text-sm font-medium" key={i}>
                     <div className="w-[8rem] flex-shrink-0 h-auto py-2 flex justify-center items-center w-full bg-base-100 border-r border-base-300">
-                        {timeRange.start} - {timeRange.end}
+                        {timeRangeEvent.start} - {timeRangeEvent.end}
                     </div>
                     <div className="w-auto h-auto flex justify-center items-center w-full bg-base-100 border-r border-base-300">
                     </div>
