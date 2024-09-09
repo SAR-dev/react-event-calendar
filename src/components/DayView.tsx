@@ -1,29 +1,17 @@
 import { useMemo } from "react";
-import { timeRanges, months, getWeekday } from "../helpers/calendar"
+import { timeRanges, months, getWeekday, isMatchingDate, formatTimestampToTime } from "../helpers/calendar"
 import { CalendarDataType, TimeRangeEventsType } from "../types/types"
 import { stringToColor } from "../helpers/color";
 
-function formatTimestampToTime(timestamp: string) {
-    const date = new Date(timestamp);
-    return `${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
-}
-
 function filterData(year: number, month: number, day: number, data: CalendarDataType[]): TimeRangeEventsType[] {
-    // Add the timeRange property to each event and filter by the given date
-    const res = data.filter((event) => {
-        const eventDate = new Date(event.start_at);
-        return (
-            eventDate.getFullYear() === year &&
-            eventDate.getMonth() + 1 === month &&
-            eventDate.getDate() === day
-        );
-    });
-
-    // Filter the events to fit within the defined timeRanges
     return timeRanges.map(timeRange => {
         return {
             ...timeRange,
-            events: res.filter(event =>
+            events: data.filter(event =>
+                isMatchingDate({
+                    date: new Date(event.start_at),
+                    year, month, day
+                }) &&
                 formatTimestampToTime(event.start_at) >= timeRange.start &&
                 formatTimestampToTime(event.start_at) < timeRange.end
             ),

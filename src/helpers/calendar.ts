@@ -127,7 +127,7 @@ export const timeRanges: TimeRangeType[] = [
     { start: "20:00", end: "21:00" },
     { start: "21:00", end: "22:00" },
     { start: "22:00", end: "23:00" },
-    { start: "23:00", end: "00:00" } 
+    { start: "23:00", end: "00:00" }
 ];
 
 
@@ -147,7 +147,7 @@ export const getYearsRange = () => {
 
 const getWeekOfMonth = (date: Date) => {
     const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    
+
     // Find the day of the first Monday of the month
     const dayOfWeek = startOfMonth.getDay();
     const firstMonday = dayOfWeek === 0 ? 2 : (dayOfWeek === 1 ? 1 : 9 - dayOfWeek);
@@ -192,17 +192,17 @@ export const getWeeksByYearAndMonth = (year: number, month: number) => {
 export const getWeekByYearMonthAndDate = (year: number, month: number, date: number) => {
     // Create a date object for the given date
     const inputDate = new Date(year, month - 1, date);
-    
+
     // Find the day of the week for the given date (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
     const dayOfWeek = inputDate.getDay();
-    
+
     // Calculate how many days to subtract to get to the Monday of that week
     const daysToMonday = (dayOfWeek + 6) % 7; // This will give us the offset from Sunday to Monday
-    
+
     // Create a new date object for the Monday of that week
     const mondayDate = new Date(inputDate);
     mondayDate.setDate(inputDate.getDate() - daysToMonday);
-    
+
     // Generate the week dates starting from Monday
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
@@ -214,7 +214,7 @@ export const getWeekByYearMonthAndDate = (year: number, month: number, date: num
             year: weekDay.getFullYear()
         });
     }
-    
+
     return weekDates;
 }
 
@@ -229,12 +229,25 @@ export const getWeekday = (year: number, month: number, date: number) => {
 export const getDaysOfMonth = (year: number, month: number) => {
     // Get the number of days in the given month
     const daysInMonth = new Date(year, month, 0).getDate();
-    
+
     // Create an array with all the days of the month
     const daysArray = [];
     for (let day = 1; day <= daysInMonth; day++) {
         daysArray.push(day);
     }
-    
+
     return daysArray;
+}
+
+export const isMatchingDate = ({ date, year, month, day }: { date: Date, year: number, month: number, day: number }): boolean => {
+    return (
+        date.getFullYear() === year &&
+        (date.getMonth() + 1) === month &&
+        date.getDate() === day
+    );
+};
+
+export function formatTimestampToTime(timestamp: string) {
+    const date = new Date(timestamp);
+    return `${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:${date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()}`;
 }

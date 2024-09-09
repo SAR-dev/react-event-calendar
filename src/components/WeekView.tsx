@@ -1,6 +1,23 @@
 import { useMemo } from "react"
-import { weekdays, timeRanges, getWeekByYearMonthAndDate } from "../helpers/calendar"
-import { CalendarDataType } from "../types/types";
+import { weekdays, timeRanges, getWeekByYearMonthAndDate, isMatchingDate, formatTimestampToTime } from "../helpers/calendar"
+import { CalendarDataType, TimeRangeEventsType } from "../types/types";
+
+function filterData(year: number, month: number, day: number, data: CalendarDataType[]): TimeRangeEventsType[] {
+    return timeRanges.map(timeRange => {
+        return {
+            ...timeRange,
+            events: data.filter(event =>
+                isMatchingDate({
+                    date: new Date(event.start_at),
+                    year, month, day
+                }) &&
+                formatTimestampToTime(event.start_at) >= timeRange.start &&
+                formatTimestampToTime(event.start_at) < timeRange.end
+            ),
+        };
+    });
+}
+
 
 const WeekView = ({ 
     year, 
