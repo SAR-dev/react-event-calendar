@@ -1,11 +1,40 @@
 import { useState } from "react"
 import { months, getYearsRange, getDaysOfMonth } from "./helpers/calendar"
-import { CalendarViewTypes } from "./types"
+import { CalendarDataType, CalendarViewTypes } from "./types/types"
 import MonthView from "./components/MonthView"
 import WeekView from "./components/WeekView"
 import DayView from "./components/DayView"
 
-function App() {
+const data: CalendarDataType[] = [
+  {
+    title: "Team Meeting",
+    start_at: "2024-09-05T10:00:00+09:00",
+    end_at: "2024-09-05T11:30:00+09:00"
+  },
+  {
+    title: "Project Deadline",
+    start_at: "2024-09-10T15:00:00+09:00",
+    end_at: "2024-09-10T16:00:00+09:00"
+  },
+  {
+    title: "Client Presentation",
+    start_at: "2024-09-15T09:30:00+09:00",
+    end_at: "2024-09-15T10:30:00+09:00"
+  },
+  {
+    title: "Workshop",
+    start_at: "2024-09-20T14:00:00+09:00",
+    end_at: "2024-09-20T17:00:00+09:00"
+  },
+  {
+    title: "Monthly Review",
+    start_at: "2024-09-25T11:00:00+09:00",
+    end_at: "2024-09-25T12:00:00+09:00"
+  }
+]
+
+
+const App = () => {
   const [year, setYear] = useState(new Date().getFullYear())
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [day, setDay] = useState(new Date().getDate())
@@ -64,9 +93,9 @@ function App() {
           </button>
         </div>
       </div>
-      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={day} />}
-      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={day} />}
-      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} day={day} />}
+      {view == CalendarViewTypes.DAY && <DayView year={year} month={month} day={day} data={data} />}
+      {view == CalendarViewTypes.WEEK && <WeekView year={year} month={month} day={day} data={data} />}
+      {view == CalendarViewTypes.MONTH && <MonthView year={year} month={month} day={day} data={data} />}
     </div>
   )
 }

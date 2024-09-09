@@ -1,7 +1,18 @@
 import { useMemo } from "react"
 import { weekdays, timeRanges, getWeekByYearMonthAndDate } from "../helpers/calendar"
+import { CalendarDataType } from "../types/types";
 
-const WeekView = ({ year, month, day }: { year: number, month: number, day: number }) => {
+const WeekView = ({ 
+    year, 
+    month, 
+    day,
+    data
+}: { 
+    year: number, 
+    month: number, 
+    day: number,
+    data: CalendarDataType[]
+}) => {
     const weekByYearMonthAndDate = useMemo(
         () => getWeekByYearMonthAndDate(year, month, day),
         [year, month, day]

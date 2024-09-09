@@ -1,6 +1,17 @@
 import { timeRanges, months, getWeekday } from "../helpers/calendar"
+import { CalendarDataType } from "../types/types"
 
-const DayView = ({ year, month, day }: { year: number, month: number, day: number }) => {
+const DayView = ({ 
+    year, 
+    month, 
+    day,
+    data
+}: { 
+    year: number, 
+    month: number, 
+    day: number,
+    data: CalendarDataType[]
+}) => {
     return (
         <div className="flex flex-col divide-y divide-base-300 border border-base-300 relative">
             <div className="w-full flex border-x border-base-300 text-sm font-medium sticky top-0">
