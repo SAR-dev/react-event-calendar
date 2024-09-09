@@ -29,7 +29,7 @@ const WeekView = ({
             <div className="w-full grid grid-cols-8 border border-base-300 text-sm font-medium sticky top-0">
                 <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300"></div>
                 {weekdays.map((weekday, i) => (
-                    <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300" key={i}>
+                    <div className={`h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300 ${weekDates[i].day == date ? "bg-info/30" : ""}`} key={i}>
                         {weekday.longName}
                     </div>
                 ))}
@@ -37,7 +37,7 @@ const WeekView = ({
             <div className="w-full grid grid-cols-8 border border-base-300 text-sm font-medium">
                 <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300"></div>
                 {weekDates.map((day, i) => (
-                    <div className="h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300 text-xs font-light" key={i}>
+                    <div className={`h-8 flex justify-center items-center w-full bg-base-100 border-r border-base-300 text-xs font-light ${weekDates[i].day == date ? "bg-info/30" : ""}`} key={i}>
                         {day.day} {day.month}
                     </div>
                 ))}
@@ -48,7 +48,7 @@ const WeekView = ({
                         {timeRangeEvent.start}
                     </div>
                     {weekdays.map((day, i) => (
-                        <div className="h-auto min-h-14 flex items-center w-full bg-base-100 border-r border-base-300 p-2" key={i}>
+                        <div className={`h-auto min-h-14 flex items-center w-full bg-base-100 border-r border-base-300 p-2 ${weekDates[i].day == date ? "bg-info/30" : ""}`} key={i}>
                             {timeRangeEvent.events.filter(e => getDayOfWeekIndex(new Date(e.start_at)) == day.index).map(ev => (
                                 <div className="flex gap-2 items-center text-xs" key={i}>
                                     <div className="h-3 w-3 rounded-full flex-shrink-0" style={{ backgroundColor: `${stringToColor(ev.title)}` }}></div>
