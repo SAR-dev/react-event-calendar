@@ -42,7 +42,7 @@ const MonthView = ({
             {weeks.map((weekNo) => (
                 <div className="w-full grid grid-cols-7 border border-base-300 text-sm font-medium" key={weekNo}>
                     {weekdays.map((weekday, i) => (
-                        <div className={`h-20 relative flex flex-col gap-1 justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == date ? "bg-info text-info-content" : ""}`} key={i}>
+                        <div className={`h-20 relative flex flex-col gap-1 justify-center items-center w-full bg-base-100 border-r border-base-300 ${weeksByYearAndMonth[weekNo][weekday.index] == date ? "bg-info/30" : ""}`} key={i}>
                             {weeksByYearAndMonth[weekNo][weekday.index]}
                             <div className="w-full flex items-center justify-center">
                                 <div className="h-6 w-6 flex justify-center items-center bg-warning text-warning-content rounded-full mb-1">
